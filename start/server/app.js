@@ -1,11 +1,12 @@
-var express = require('express');
-var volleyball = require('volleyball');
-var bodyParser = require('body-parser');
-var path = require('path');
+const express = require('express');
+const volleyball = require('volleyball');
+const bodyParser = require('body-parser');
+const path = require('path');
+const apiRouter = require('./api');
 
-var db = require('../models').db;
+const db = require('../models').db;
 
-var app = express();
+const app = express();
 
 // logging and body-parsing
 app.use(volleyball);
@@ -16,9 +17,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // static file-serving middleware
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+app.use('/api', apiRouter);
+
 // failed to catch req above means 404, forward to error handler
 app.use(function (req, res, next) {
-    var err = new Error('Not Found');
+    let err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
@@ -31,7 +34,7 @@ app.use(function (err, req, res, next) {
 });
 
 // listen on a port
-var port = 3000;
+const port = 3000;
 app.listen(port, function () {
     console.log('The server is listening closely on port', port);
     db.sync()
