@@ -6,6 +6,13 @@ const Hotel = require("../models").Hotel;
 const Restaurant = require("../models").Restaurant;
 const Activity = require("../models").Activity;
 
+// window.fetch('/attractions')
+//     .then(result => result.json())
+//     .then(data => {
+//         console.log(data)
+//     })
+//     .catch(console.error)
+
 const allAttractions = {};
 
 router.get('/', (req, res, next) => {
